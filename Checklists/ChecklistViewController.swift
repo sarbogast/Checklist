@@ -9,17 +9,14 @@
 import UIKit
 
 class ChecklistViewController: UITableViewController {
+    let checklistsKey = "checklists"
     var dataModel = [Checklist]()
     //var indexPathToEdit: NSIndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        dataModel.append(Checklist(withTitle:"Promener le chien"))
-        dataModel.append(Checklist(withTitle:"Brosser mes dents"))
-        dataModel.append(Checklist(withTitle:"Apprendre à développer une app"))
-        dataModel.append(Checklist(withTitle:"M'entraîner pour le beer pong"))
-        dataModel.append(Checklist(withTitle:"Dormir"))
+        print("Data file path: \(dataFilePath())")
+        loadChecklists()
     }
 
     override func didReceiveMemoryWarning() {
@@ -54,6 +51,44 @@ class ChecklistViewController: UITableViewController {
                     }
                 }
             }
+        } else if segue.identifier == "showList" {
+            if let todoListViewController = segue.destinationViewController as? TodoListViewController {
+                if let indexPath = self.tableView.indexPathForCell(sender as! UITableViewCell) {
+                    todoListViewController.todoListViewControllerDelegate = self
+                    todoListViewController.todoList = dataModel[indexPath.row]
+                }
+            }
+        }
+    }
+    
+    func documentsDirectory() -> String {
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        return paths[0]
+    }
+    
+    func dataFilePath() -> String {
+        return (documentsDirectory() as NSString).stringByAppendingPathComponent("Checklists.plist")
+    }
+    
+    func saveChecklists() {
+        let data = NSMutableData()
+        let archiver = NSKeyedArchiver(forWritingWithMutableData: data)
+        archiver.encodeObject(dataModel, forKey: checklistsKey)
+        archiver.finishEncoding()
+        data.writeToFile(dataFilePath(), atomically: true)
+    }
+    
+    func loadChecklists() {
+        let path = dataFilePath()
+        if NSFileManager.defaultManager().fileExistsAtPath(path) {
+            if let data = NSData(contentsOfFile: path) {
+                let unarchiver = NSKeyedUnarchiver(forReadingWithData: data)
+                defer {
+                    unarchiver.finishDecoding()
+                }
+                self.dataModel = unarchiver.decodeObjectForKey(checklistsKey) as! [Checklist]
+                //unarchiver.finishDecoding()
+            }
         }
     }
 }
@@ -68,17 +103,19 @@ extension ChecklistViewController : AddItemViewControllerDelegate {
         addItem(item)
         
         controller.dismissViewControllerAnimated(true, completion: nil)
+        
+        saveChecklists()
     }
     
     func addItemViewController(controller: AddItemViewController, didFinishEditingItem item: Checklist) {
         
-        if let index = dataModel.indexOf({checklist in
-            return checklist === item
-        }) {
+        if let index = dataModel.indexOf(item) {
             let indexPath = NSIndexPath(forRow: index, inSection: 0)
             self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
             controller.dismissViewControllerAnimated(true, completion: nil)
         }
+        
+        saveChecklists()
     }
 }
 
@@ -102,20 +139,14 @@ extension ChecklistViewController { //: UITableViewDataSource {
         dataModel.removeAtIndex(indexPath.row)
         
     tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        
+        saveChecklists()
     }
 }
 
-extension ChecklistViewController { //: UITableViewDelegate {
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        let checklist = self.dataModel[indexPath.row]
-        checklist.done = !checklist.done
-        
-        tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+extension ChecklistViewController: TodoListViewControllerDelegate {
+    func todoListViewController(controller:TodoListViewController, didChangeTodoList:Checklist) {
+        saveChecklists()
     }
-    
-    /*override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
-        self.indexPathToEdit = indexPath
-    }*/
 }
 

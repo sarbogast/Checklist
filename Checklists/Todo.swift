@@ -1,32 +1,33 @@
 //
-//  Checklist.swift
+//  Todo.swift
 //  Checklists
 //
-//  Created by Sebastien Arbogast on 26/08/2016.
+//  Created by Sebastien Arbogast on 30/08/2016.
 //  Copyright © 2016 BusinessTraining. All rights reserved.
 //
 
 import Foundation
 
-class Checklist: NSObject, NSCoding {
+class Todo: NSObject, NSCoding {
     let titleKey = "Title"
-    let todosKey = "Todos"
+    let doneKey = "Done"
     
-    var title:String = ""
-    var todos = [Todo]()
+    var title = ""
+    var done = false
     
     init(withTitle:String) {
+        super.init()
         self.title = withTitle
     }
     
-    required init?(coder aDecoder: NSCoder){
+    required init?(coder aDecoder: NSCoder) {
         super.init()
         title = aDecoder.decodeObjectForKey(titleKey) as! String
-        todos = aDecoder.decodeObjectForKey(todosKey) as! [Todo]
+        done = aDecoder.decodeBoolForKey(doneKey)
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(title, forKey: titleKey)
-        aCoder.encodeObject(todos, forKey: todosKey)
+        aCoder.encodeBool(done, forKey: doneKey)
     }
 }
