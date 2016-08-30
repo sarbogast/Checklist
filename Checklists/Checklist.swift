@@ -29,4 +29,8 @@ class Checklist: NSObject, NSCoding {
         aCoder.encodeObject(title, forKey: titleKey)
         aCoder.encodeObject(todos, forKey: todosKey)
     }
+    
+    func numberOfUndoneTodos() -> Int {
+        return todos.filter{ !$0.done }.count
+    }
 }

@@ -18,6 +18,11 @@ class ChecklistViewController: UITableViewController {
         print("Data file path: \(dataFilePath())")
         loadChecklists()
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        self.tableView.reloadData()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -127,10 +132,9 @@ extension ChecklistViewController { //: UITableViewDataSource {
     override func tableView(tableView:UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("ChecklistItem", forIndexPath: indexPath)
         
-        let label = cell.viewWithTag(1000) as! UILabel
         let checklist = self.dataModel[indexPath.row]
-        label.text = checklist.title
-        //cell.accessoryType = checklist.done ? .Checkmark : .None
+        cell.textLabel!.text = checklist.title
+        cell.detailTextLabel?.text = "(\(checklist.todos.count) tâches dont \(checklist.numberOfUndoneTodos()) non-terminées)"
         
         return cell
     }

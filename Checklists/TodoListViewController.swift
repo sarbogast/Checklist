@@ -82,7 +82,9 @@ extension TodoListViewController {
         let todo = self.todoList.todos[indexPath.row]
         todo.done = !todo.done
         tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        
+        if let todoListViewControllerDelegate = self.todoListViewControllerDelegate {
+            todoListViewControllerDelegate.todoListViewController(self, didChangeTodoList: self.todoList)
+        }
     }
 }
 
