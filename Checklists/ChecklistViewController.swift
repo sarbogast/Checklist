@@ -9,12 +9,12 @@
 import UIKit
 
 class ChecklistViewController: UITableViewController {
-    var dataModel = [Checklist]()
+    var dataModel:DataModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        dataModel = DataModel.sharedModel.lists
+        dataModel = DataModel.sharedModel
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -28,9 +28,9 @@ class ChecklistViewController: UITableViewController {
     }
     
     func addItem(item: Checklist) {
-        dataModel.append(item)
+        dataModel.lists.append(item)
         
-        let indexPath = NSIndexPath(forRow: dataModel.count - 1, inSection: 0)
+        let indexPath = NSIndexPath(forRow: dataModel.lists.count - 1, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
         
         self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Bottom, animated: true)
@@ -77,7 +77,7 @@ extension ChecklistViewController : AddItemViewControllerDelegate {
     
     func addItemViewController(controller: AddItemViewController, didFinishEditingItem item: Checklist) {
         
-        if let index = dataModel.indexOf(item) {
+        if let index = dataModel.lists.indexOf(item) {
             let indexPath = NSIndexPath(forRow: index, inSection: 0)
             self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
             controller.dismissViewControllerAnimated(true, completion: nil)
@@ -87,13 +87,13 @@ extension ChecklistViewController : AddItemViewControllerDelegate {
 
 extension ChecklistViewController { //: UITableViewDataSource {
     override func tableView(tableView:UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataModel.count
+        return dataModel.lists.count
     }
     
     override func tableView(tableView:UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("ChecklistItem", forIndexPath: indexPath)
         
-        let checklist = self.dataModel[indexPath.row]
+        let checklist = self.dataModel.lists[indexPath.row]
         cell.textLabel!.text = checklist.title
         if checklist.todos.count > 0 && checklist.numberOfUndoneTodos() == 0 {
             cell.detailTextLabel!.text = "C'est fait!"
@@ -105,7 +105,7 @@ extension ChecklistViewController { //: UITableViewDataSource {
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        dataModel.removeAtIndex(indexPath.row)
+        dataModel.lists.removeAtIndex(indexPath.row)
         
         tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
     }
@@ -114,11 +114,11 @@ extension ChecklistViewController { //: UITableViewDataSource {
 //UITableViewDelegate implementation
 extension ChecklistViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.performSegueWithIdentifier("showListSegue", sender: self.dataModel[indexPath.row])
+        self.performSegueWithIdentifier("showListSegue", sender: self.dataModel.lists[indexPath.row])
     }
     
     override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
-        self.performSegueWithIdentifier("editItemSegue", sender: self.dataModel[indexPath.row])
+        self.performSegueWithIdentifier("editItemSegue", sender: self.dataModel.lists[indexPath.row])
     }
 }
 

@@ -70,6 +70,9 @@ extension TodoListViewController {
         if editingStyle == .Delete {
             self.todoList.todos.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            if let todoListViewControllerDelegate = self.todoListViewControllerDelegate {
+                todoListViewControllerDelegate.todoListViewController(self, didChangeTodoList: self.todoList)
+            }
         }
     }
 }
