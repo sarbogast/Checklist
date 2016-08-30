@@ -95,7 +95,11 @@ extension ChecklistViewController { //: UITableViewDataSource {
         
         let checklist = self.dataModel[indexPath.row]
         cell.textLabel!.text = checklist.title
-        cell.detailTextLabel?.text = "(\(checklist.todos.count) tâches dont \(checklist.numberOfUndoneTodos()) non-terminées)"
+        if checklist.todos.count > 0 && checklist.numberOfUndoneTodos() == 0 {
+            cell.detailTextLabel!.text = "C'est fait!"
+        } else {
+            cell.detailTextLabel?.text = "(\(checklist.todos.count) tâches dont \(checklist.numberOfUndoneTodos()) non-terminées)"
+        }
         
         return cell
     }
