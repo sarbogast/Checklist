@@ -38,10 +38,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="SqX-yn-oBG" kind="presentation" identifier="editItemSegue" trigger="accessoryAction" id="8y4-Sb-6er"/>
-                                    <segue destination="Ift-gY-MDN" kind="show" identifier="showList" id="YgN-2t-z1t"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -56,6 +52,10 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="Ift-gY-MDN" kind="show" identifier="showListSegue" id="Dkh-95-Mfn"/>
+                        <segue destination="SqX-yn-oBG" kind="presentation" identifier="editItemSegue" id="RzA-fS-AN4"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i44-D1-f7K" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -70,7 +70,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="detailButton" indentationWidth="10" reuseIdentifier="TodoCell" id="DOa-TK-gxZ">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="detailButton" indentationWidth="10" reuseIdentifier="TodoCell" id="DOa-TK-gxZ" customClass="TodoCell" customModule="Checklists" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DOa-TK-gxZ" id="XYV-Zh-0Hr">
@@ -103,6 +103,8 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="doneLabel" destination="0g6-Ss-Qnm" id="Hzn-w4-Kfe"/>
+                                    <outlet property="titleLabel" destination="nSz-II-MRJ" id="nFx-PF-J3T"/>
                                     <segue destination="Bgw-Td-QwR" kind="presentation" identifier="editTodoSegue" trigger="accessoryAction" id="vMP-US-kK4"/>
                                 </connections>
                             </tableViewCell>
@@ -309,6 +311,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="EXk-mA-4IY"/>
-        <segue reference="8y4-Sb-6er"/>
+        <segue reference="RzA-fS-AN4"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -56,13 +56,11 @@ extension TodoListViewController {
     
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("TodoCell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("TodoCell", forIndexPath: indexPath) as! TodoCell
         
         let todo = todoList.todos[indexPath.row]
-        let doneLabel = cell.viewWithTag(1000) as! UILabel
-        doneLabel.text = todo.done ? "✅" : ""
-        let titleLabel = cell.viewWithTag(1001) as! UILabel
-        titleLabel.text = todo.title
+        cell.doneLabel.text = todo.done ? "✅" : ""
+        cell.titleLabel.text = todo.title
         
         return cell
     }

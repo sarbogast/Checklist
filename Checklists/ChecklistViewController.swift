@@ -10,8 +10,8 @@ import UIKit
 
 class ChecklistViewController: UITableViewController {
     let checklistsKey = "checklists"
+    
     var dataModel = [Checklist]()
-    //var indexPathToEdit: NSIndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,25 +42,23 @@ class ChecklistViewController: UITableViewController {
         if segue.identifier == "addItemSegue" {
             if let navigationController = segue.destinationViewController as? UINavigationController {
                 if let addItemViewController = navigationController.topViewController as? AddItemViewController {
-                    
                     addItemViewController.addItemViewControllerDelegate = self
-                    
                 }
             }
         } else if segue.identifier == "editItemSegue" {
             if let navigationController = segue.destinationViewController as? UINavigationController {
                 if let addItemViewController = navigationController.topViewController as? AddItemViewController {
-                    if let indexPath = self.tableView.indexPathForCell(sender as! UITableViewCell) {
+                    if let checklist = sender as? Checklist {
                         addItemViewController.addItemViewControllerDelegate = self
-                        addItemViewController.checklistToEdit = dataModel[indexPath.row]
+                        addItemViewController.checklistToEdit = checklist
                     }
                 }
             }
-        } else if segue.identifier == "showList" {
+        } else if segue.identifier == "showListSegue" {
             if let todoListViewController = segue.destinationViewController as? TodoListViewController {
-                if let indexPath = self.tableView.indexPathForCell(sender as! UITableViewCell) {
+                if let checklist = sender as? Checklist {
                     todoListViewController.todoListViewControllerDelegate = self
-                    todoListViewController.todoList = dataModel[indexPath.row]
+                    todoListViewController.todoList = checklist
                 }
             }
         }
@@ -92,7 +90,6 @@ class ChecklistViewController: UITableViewController {
                     unarchiver.finishDecoding()
                 }
                 self.dataModel = unarchiver.decodeObjectForKey(checklistsKey) as! [Checklist]
-                //unarchiver.finishDecoding()
             }
         }
     }
@@ -142,9 +139,20 @@ extension ChecklistViewController { //: UITableViewDataSource {
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         dataModel.removeAtIndex(indexPath.row)
         
-    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
         
         saveChecklists()
+    }
+}
+
+//UITableViewDelegate implementation
+extension ChecklistViewController {
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.performSegueWithIdentifier("showListSegue", sender: self.dataModel[indexPath.row])
+    }
+    
+    override func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
+        self.performSegueWithIdentifier("editItemSegue", sender: self.dataModel[indexPath.row])
     }
 }
 
