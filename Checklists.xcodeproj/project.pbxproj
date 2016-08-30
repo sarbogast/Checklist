@@ -71,21 +71,29 @@
 		B938EF9B1D703D9700972C59 /* Checklists */ = {
 			isa = PBXGroup;
 			children = (
+				B9D653661D75B76400744BE4 /* Model */,
 				B938EF9C1D703D9700972C59 /* AppDelegate.swift */,
 				B938EF9E1D703D9700972C59 /* ChecklistViewController.swift */,
 				B938EFA01D703D9700972C59 /* Main.storyboard */,
 				B938EFA31D703D9700972C59 /* Assets.xcassets */,
 				B938EFA51D703D9700972C59 /* LaunchScreen.storyboard */,
 				B938EFA81D703D9700972C59 /* Info.plist */,
-				B90635C21D706B73007DE1B0 /* Checklist.swift */,
 				B9C3CF211D742A9700CAB15C /* AddItemViewController.swift */,
-				B9D6535C1D7583EA00744BE4 /* Todo.swift */,
 				B9D6535E1D75854500744BE4 /* TodoListViewController.swift */,
 				B9D653601D758A0E00744BE4 /* TodoViewController.swift */,
 				B9D653621D75AEF500744BE4 /* TodoCell.swift */,
-				B9D653641D75B55400744BE4 /* DataModel.swift */,
 			);
 			path = Checklists;
+			sourceTree = "<group>";
+		};
+		B9D653661D75B76400744BE4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B9D653641D75B55400744BE4 /* DataModel.swift */,
+				B90635C21D706B73007DE1B0 /* Checklist.swift */,
+				B9D6535C1D7583EA00744BE4 /* Todo.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
