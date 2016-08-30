@@ -19,6 +19,7 @@
 		B9D6535F1D75854500744BE4 /* TodoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D6535E1D75854500744BE4 /* TodoListViewController.swift */; };
 		B9D653611D758A0E00744BE4 /* TodoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D653601D758A0E00744BE4 /* TodoViewController.swift */; };
 		B9D653631D75AEF500744BE4 /* TodoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D653621D75AEF500744BE4 /* TodoCell.swift */; };
+		B9D653651D75B55400744BE4 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D653641D75B55400744BE4 /* DataModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		B9D6535E1D75854500744BE4 /* TodoListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoListViewController.swift; sourceTree = "<group>"; };
 		B9D653601D758A0E00744BE4 /* TodoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoViewController.swift; sourceTree = "<group>"; };
 		B9D653621D75AEF500744BE4 /* TodoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoCell.swift; sourceTree = "<group>"; };
+		B9D653641D75B55400744BE4 /* DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 				B9D6535E1D75854500744BE4 /* TodoListViewController.swift */,
 				B9D653601D758A0E00744BE4 /* TodoViewController.swift */,
 				B9D653621D75AEF500744BE4 /* TodoCell.swift */,
+				B9D653641D75B55400744BE4 /* DataModel.swift */,
 			);
 			path = Checklists;
 			sourceTree = "<group>";
@@ -161,6 +164,7 @@
 				B9D6535F1D75854500744BE4 /* TodoListViewController.swift in Sources */,
 				B9D6535D1D7583EA00744BE4 /* Todo.swift in Sources */,
 				B9D653631D75AEF500744BE4 /* TodoCell.swift in Sources */,
+				B9D653651D75B55400744BE4 /* DataModel.swift in Sources */,
 				B938EF9F1D703D9700972C59 /* ChecklistViewController.swift in Sources */,
 				B938EF9D1D703D9700972C59 /* AppDelegate.swift in Sources */,
 				B90635C51D707F5C007DE1B0 /* README.md in Sources */,

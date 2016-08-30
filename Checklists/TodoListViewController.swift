@@ -30,11 +30,11 @@ class TodoListViewController: UITableViewController {
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "createTodoSegue" {
-            if let navigationController = segue.destinationViewController as? UINavigationController, todoViewController = navigationController.topViewController as? TodoViewController {
+            if let navigationController = segue.destinationViewController as? UINavigationController, todoViewController = navigationController.viewControllers[0] as? TodoViewController {
                 todoViewController.todoViewControllerDelegate = self
             }
         } else if segue.identifier == "editTodoSegue" {
-            if let navigationController = segue.destinationViewController as? UINavigationController, todoViewController = navigationController.topViewController as? TodoViewController {
+            if let navigationController = segue.destinationViewController as? UINavigationController, todoViewController = navigationController.viewControllers[0] as? TodoViewController {
                 if let indexPath = tableView.indexPathForCell(sender as! UITableViewCell) {
                     todoViewController.todoViewControllerDelegate = self
                     todoViewController.todo = self.todoList.todos[indexPath.row]
